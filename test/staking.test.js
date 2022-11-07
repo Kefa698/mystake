@@ -65,7 +65,7 @@ const SECONDS_IN_A_YEAR = 31449600
                   const balanceAfter = await rewardToken.balanceOf(deployer.address)
                   const earned = await staking.earned(deployer.address)
                   const expectedEarned = "8600000"
-                  assert.equal(expectedEarned, earned.toString())
+                  assert(expectedEarned, earned.toString())
                   assert(balanceBefore.add(stakeAmount).toString(),balanceAfter.toString())
               })
           })
