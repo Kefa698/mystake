@@ -34,13 +34,13 @@ const SECONDS_IN_A_YEAR = 31449600
                   await moveBlocks(1)
                   let reward = await staking.rewardPerToken()
                   let expectedReward = "86"
-                  assert.equal(reward.toString(), expectedReward)
+                  assert(reward.toString()== expectedReward)
 
                   await moveTime(SECONDS_IN_A_YEAR)
                   await moveBlocks(1)
                   reward = await staking.rewardPerToken()
                   expectedReward = "31536"
-                  assert.equal(reward.toString(), expectedReward)
+                  assert(reward.toString()==expectedReward)
               })
           })
           describe("stake", () => {
@@ -51,7 +51,7 @@ const SECONDS_IN_A_YEAR = 31449600
                   await moveBlocks(1)
                   const earned = await staking.earned(deployer.address)
                   const expectedEarned = "8600000"
-                  assert.equal(expectedEarned, earned.toString())
+                  assert(expectedEarned== earned.toString())
               })
           })
           describe("withdraw", () => {
