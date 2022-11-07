@@ -24,6 +24,7 @@ contract Staking is ReentrancyGuard {
 
     event Staked(address indexed user, uint256 indexed amount);
     event WithdrewStake(address indexed user, uint256 indexed amount);
+    event ClaimedReward(address indexed user, uint256 indexed amount);
 
     constructor(address stakingToken, address rewardToken) {
         s_stakingToken = IERC20(stakingToken);
@@ -84,6 +85,12 @@ contract Staking is ReentrancyGuard {
         emit WithdrewStake(msg.sender, amount);
         bool succuss = s_stakingToken.transfer(msg.sender, amount);
         require(succuss, "transfer failed");
+    }
+
+    function claimReward() external updateReward(msg.sender) nonReentrant {
+        uint256 reward = s_rewards[msg.sender];
+        s_rewards[msg.sender] = 0;
+        emit ClaimedReward(msg.sender, reward);
     }
 
     //////////modifiers////////
