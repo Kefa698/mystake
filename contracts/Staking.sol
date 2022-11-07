@@ -107,4 +107,9 @@ contract Staking is ReentrancyGuard {
         require(amount > 0, "amount should be more than zero");
         _;
     }
+
+    ////getter function/////////
+    function getStaked(address account) public view returns (uint256) {
+        return s_balances[account];
+    }
 }
