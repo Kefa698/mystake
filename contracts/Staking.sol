@@ -23,6 +23,7 @@ contract Staking is ReentrancyGuard {
     mapping(address => uint256) public s_balances;
 
     event Staked(address indexed user, uint256 indexed amount);
+    event WithdrewStake(address indexed user, uint256 indexed amount);
 
     constructor(address stakingToken, address rewardToken) {
         s_stakingToken = IERC20(stakingToken);
@@ -65,6 +66,24 @@ contract Staking is ReentrancyGuard {
         s_balances[msg.sender] += amount;
         emit Staked(msg.sender, amount);
         bool success = s_stakingToken.transferFrom(msg.sender, address(this), amount);
+        require(success, "tranfer failed");
+    }
+
+    /**
+     * @notice withdraw |withdraw ton from the contract
+     * @param amount ||amount to withdraw
+     */
+    function withdaw(uint256 amount)
+        external
+        updateReward(msg.sender)
+        nonReentrant
+        moreThanZero(amount)
+    {
+        s_totalSupply -= amount;
+        s_balances[msg.sender] -= amount;
+        emit WithdrewStake(msg.sender, amount);
+        bool succuss = s_stakingToken.transfer(msg.sender, amount);
+        require(succuss, "transfer failed");
     }
 
     //////////modifiers////////
