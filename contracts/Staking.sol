@@ -74,7 +74,7 @@ contract Staking is ReentrancyGuard {
      * @notice withdraw |withdraw ton from the contract
      * @param amount ||amount to withdraw
      */
-    function withdaw(uint256 amount)
+    function withdraw(uint256 amount)
         external
         updateReward(msg.sender)
         nonReentrant
